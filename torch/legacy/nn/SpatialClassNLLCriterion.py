@@ -21,7 +21,8 @@ class SpatialClassNLLCriterion(Criterion):
             self.output_tensor,
             self.sizeAverage,
             self.weights,
-            self.total_weight_tensor
+            self.total_weight_tensor,
+            -1
         )
         self.output = self.output_tensor[0]
         return self.output
@@ -35,6 +36,7 @@ class SpatialClassNLLCriterion(Criterion):
             self.gradInput,
             self.sizeAverage,
             self.weights,
-            self.total_weight_tensor
+            self.total_weight_tensor,
+            -1
         )
         return self.gradInput

@@ -132,7 +132,15 @@ class NLLLoss2d(_WeightedLoss):
         >>> output = loss(m(input), target)
         >>> output.backward()
     """
-    pass
+    def __init__(self, weight=None, size_average=True, ignored_label=-1):
+        super(NLLLoss2d, self).__init__(
+            size_average=size_average, weight=weight)
+        self.ignored_label = int(ignored_label)
+
+    def forward(self, input, target):
+        _assert_no_grad(target)
+        backend_fn = getattr(self._backend, type(self).__name__)
+        return backend_fn(self.size_average, self.ignored_label, weight=self.weight)(input, target)
 
 
 class KLDivLoss(_WeightedLoss):
